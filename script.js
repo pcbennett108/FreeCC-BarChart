@@ -72,6 +72,15 @@ let drawBars = () => {
     })
     .attr("data-gdp", (item) => {
       return item[1];
+    })
+    .attr("height", (item) => {
+      return heightScale(item[1]);
+    })
+    .attr("x", (item, index) => {
+      return xScale(index);
+    })
+    .attr("y", (item) => {
+      return height - padding - heightScale(item[1]);
     });
 };
 

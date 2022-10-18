@@ -59,7 +59,21 @@ let generateScales = () => {
     .range([height - padding, padding]);
 };
 
-let drawBars = () => {};
+let drawBars = () => {
+  svg
+    .selectAll("rect")
+    .data(values)
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("width", (width - 2 * padding) / values.length)
+    .attr("data-date", (item) => {
+      return item[0];
+    })
+    .attr("data-gdp", (item) => {
+      return item[1];
+    });
+};
 
 let generateAxes = () => {
   let xAxis = d3.axisBottom(xAxisScale);

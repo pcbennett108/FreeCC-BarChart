@@ -3,7 +3,7 @@ let url =
 let req = new XMLHttpRequest();
 
 let data;
-let values;
+let values = [];
 
 let heightScale;
 let xScale;
@@ -21,8 +21,21 @@ let drawCanvas = () => {
   svg.attr("height", height);
 };
 
-let generateScale = () => {};
+let generateScales = () => {};
 
 let drawBars = () => {};
 
-let generateAxes;
+let generateAxes = () => {};
+
+req.open("GET", url, true);
+req.onload = () => {
+  data = JSON.parse(req.responseText);
+  values = data.data;
+  console.log(values);
+  drawCanvas();
+  generateScales();
+  drawBars();
+  generateAxes();
+};
+
+req.send();

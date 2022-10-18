@@ -8,3 +8,8 @@ body {
 svg {
   background-color: lightsteelblue;
 }
+
+#title {
+  fill: brown;
+  font-size: 24px;
+}

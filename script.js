@@ -41,8 +41,6 @@ let generateScales = () => {
     return new Date(item[0]);
   });
 
-  console.log(datesArray);
-
   xAxisScale = d3
     .scaleTime()
     .domain([d3.min(datesArray), d3.max(datesArray)])
@@ -60,6 +58,14 @@ let generateScales = () => {
 };
 
 let drawBars = () => {
+  let tooltip = d3
+    .select("body")
+    .append("div")
+    .attr("id", "tooltip")
+    .style("visibility", "hidden")
+    .style("width", "auto")
+    .style("height", "auto");
+
   svg
     .selectAll("rect")
     .data(values)
@@ -81,6 +87,16 @@ let drawBars = () => {
     })
     .attr("y", (item) => {
       return height - padding - heightScale(item[1]);
+    })
+    .on("mouseover", (item) => {
+      tooltip.transition().style("visibility", "visible");
+
+      tooltip.text(item[0]);
+
+      document.querySelector("#tooltip").setAttribute("data-date", item[0]);
+    })
+    .on("mouseout", (item) => {
+      tooltip.transition().style("visibility", "hidden");
     });
 };
 
@@ -105,7 +121,6 @@ req.open("GET", url, true);
 req.onload = () => {
   data = JSON.parse(req.responseText);
   values = data.data;
-  console.log(values);
   drawCanvas();
   generateScales();
   drawBars();
